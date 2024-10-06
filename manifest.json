@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Scroll Lock Extension",
   "version": "1.0.0",
-  "description": "Locks mouse scroll on specified pages",
+  "description": "Locks scroll on specified pages",
   "permissions": [
     "storage",
     "webNavigation",
