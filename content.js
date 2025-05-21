@@ -1,8 +1,17 @@
+function preventDefault(e) {
+  e.preventDefault();
+}
+
 function disableScroll() {
-  window.addEventListener('scroll', function(event) {
-      event.preventDefault();
-      window.scrollTo(0, 0);
-  }, { passive: false });
+  // Retrying if body is not available yet
+  if (!document.body) {
+    setTimeout(disableScroll, 100);
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+  document.addEventListener('touchmove', preventDefault, { passive: false });
+  document.addEventListener('wheel', preventDefault, { passive: false });
 }
 
 async function init() {
@@ -10,19 +19,19 @@ async function init() {
   const currentHost = window.location.hostname;
 
   if (pages.includes(currentHost)) {
-      disableScroll();
+    disableScroll();
   }
 }
 
 function getPagesFromStorage() {
   return new Promise((resolve, reject) => {
-      try {
-          chrome.storage.local.get(['scrollLockPages'], function(result) {
-              resolve(result.scrollLockPages || []);
-          });
-      } catch (error) {
-          reject(error);
-      }
+    try {
+      chrome.storage.local.get(['scrollLockPages'], function(result) {
+        resolve(result.scrollLockPages || []);
+      });
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 
