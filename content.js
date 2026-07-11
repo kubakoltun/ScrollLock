@@ -106,7 +106,7 @@ function extractHostname(input) {
         const url = new URL(input);
         return url.hostname;
     } catch (e) {
-        // Fallback if user enters something like "linkedin.com"
+        // Fallback if user enters something like "hostname.com"
         return input.replace(/^https?:\/\//, '').split('/')[0];
     }
 }
